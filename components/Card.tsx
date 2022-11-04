@@ -2,9 +2,11 @@ import { HeartIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
 import { useAuthModalContext } from "@/context/AuthModalContext";
 import { PrismaTypes } from "@/lib/prisma";
+import { cn } from "@/utils";
 
 const Card = ({
   id = "",
@@ -15,11 +17,14 @@ const Card = ({
   baths = 0,
   price = 0,
   favorite = false,
+  isLoading = true,
   onClickFavorite,
 }: PrismaTypes.HomeMaxAggregateOutputType & {
   onClickFavorite: (id: string) => void;
   favorite: boolean;
+  isLoading: boolean;
 }) => {
+  const [isImageReady, setImageIsReady] = useState(true);
   const { data } = useSession();
   const { openModal } = useAuthModalContext();
 
@@ -40,27 +45,34 @@ const Card = ({
       <a className="block w-full">
         <div className="relative">
           <div className="bg-gray-200 rounded-lg shadow overflow-hidden aspect-w-16 aspect-h-9">
-            {image ? (
+            {image && (
               <Image
                 src={image}
                 alt={title ?? ""}
                 layout="fill"
                 objectFit="cover"
-                className="hover:opacity-80 transition"
+                className={cn(
+                  "group-hover:opacity-75 duration-700 ease-in-out",
+                  isLoading
+                    ? "grayscale blur-2xl scale-110"
+                    : "grayscale-0 blur-0 scale-100"
+                )}
               />
-            ) : null}
+            )}
           </div>
-          <button
-            type="button"
-            onClick={(e) => handleFavoriteIconClick(e)}
-            className="absolute top-2 right-2"
-          >
-            <HeartIcon
-              className={`w-7 h-7 drop-shadow-lg transition ${
-                favorite ? "text-primary-500" : "text-white"
-              }`}
-            />
-          </button>
+          {!isLoading && (
+            <button
+              type="button"
+              onClick={(e) => handleFavoriteIconClick(e)}
+              className="absolute top-2 right-2"
+            >
+              <HeartIcon
+                className={`w-7 h-7 drop-shadow-lg transition ${
+                  favorite ? "text-primary-500" : "text-white"
+                }`}
+              />
+            </button>
+          )}
         </div>
         <div className="mt-2 w-full text-gray-700 font-semibold leading-tight">
           {title ?? ""}

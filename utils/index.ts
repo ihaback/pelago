@@ -15,3 +15,7 @@ export const SignInSchema = Yup.object().shape({
     .email("Invalid email")
     .required("This field is required"),
 });
+
+export const cn = (...classes: string[]) => {
+  return classes.filter(Boolean).join(" ");
+};

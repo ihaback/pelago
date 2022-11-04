@@ -15,10 +15,6 @@ const Grid = ({
 
   const { favorites, isLoading, toggleFavorite } = useFavorites();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return isEmpty ? (
     <p className="text-amber-700 bg-amber-100 px-4 rounded-md py-2 max-w-max inline-flex items-center space-x-1">
       <ExclamationIcon className="shrink-0 w-5 h-5 mt-px" />
@@ -41,6 +37,7 @@ const Grid = ({
             favorite={
               !!favorites.find((favoriteId: string) => favoriteId === home.id)
             }
+            isLoading={isLoading}
           />
         ))}
     </div>
