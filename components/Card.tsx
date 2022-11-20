@@ -2,7 +2,6 @@ import { HeartIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
 
 import { useAuthModalContext } from "@/context/AuthModalContext";
 import { PrismaTypes } from "@/lib/prisma";
@@ -24,7 +23,6 @@ const Card = ({
   favorite: boolean;
   isLoading: boolean;
 }) => {
-  const [isImageReady, setImageIsReady] = useState(true);
   const { data } = useSession();
   const { openModal } = useAuthModalContext();
 
@@ -57,6 +55,7 @@ const Card = ({
                     ? "grayscale blur-2xl scale-110"
                     : "grayscale-0 blur-0 scale-100"
                 )}
+                sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
               />
             )}
           </div>
