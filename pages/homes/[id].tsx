@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (home) {
     return {
       props: JSON.parse(JSON.stringify(home)),
-      revalidate: 1,
+      revalidate: 20,
     };
   }
 
