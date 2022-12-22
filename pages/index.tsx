@@ -4,8 +4,13 @@ import Grid from "@/components/Grid";
 import Layout from "@/components/Layout";
 import { prisma } from "@/lib/prisma";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const homes = await prisma.home.findMany({ orderBy: { createdAt: "desc" } });
+
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
 
   return {
     props: {
