@@ -206,7 +206,7 @@ const AuthModal = ({
                           >
                             {isSubmitting
                               ? "Loading..."
-                              : `Sign ${showSignIn ? "in" : "up"}`}
+                              : `Sign ${showSignIn ? "in" : "up"} with email`}
                           </button>
 
                           <p className="mt-2 text-center text-sm text-gray-500">
