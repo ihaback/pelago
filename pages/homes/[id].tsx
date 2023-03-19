@@ -100,7 +100,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: homes.map((home: PrismaTypes.HomeMaxAggregateOutputType) => ({
       params: { id: home.id },
     })),
-    fallback: true,
+    fallback: "blocking",
   };
 };
 
